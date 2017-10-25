@@ -1,0 +1,14 @@
+<div class="localStream" ng-controller="LocalStreamController as localStream">
+	<p style="display: none;">Details: <input ng-model="localStream.name"/></p>
+	<video id="localVideo" muted="muted" autoplay="true" poster="images/webcam.png"></video>
+	<strong>Profile</strong>
+	<p>Name: Vanessa Tan<br />
+	NRIC: S9411928U</p>
+	<strong>Recruitment Details</strong>
+	<p>Programme: Recruitment17<br />
+	Position: Cabin Crew<br />
+	HR: Ms. Michelle</p>
+	<button class="btn {{localStream.cameraIsOn ?'btn-danger': 'btn-success'}} btn-block" id="toggleQuestionnaire" ng-click="localStream.toggleCam()">
+		{{ localStream.cameraIsOn ? 'Quit interview' : 'Start interview' }}
+	</button>
+</div>

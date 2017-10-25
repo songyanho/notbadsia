@@ -1,0 +1,45 @@
+.container {
+    min-height: 90vh;
+}
+
+#questionnairevc, #questionlist p {
+    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 50px;
+}
+
+.localStream {
+    background: #fff;
+    padding: 20px;
+    color: #000;
+}
+
+.localStream video {
+    outline: 0px none;
+}
+
+.remoteStreams{
+  display: inline-block;
+  top: 15px;
+  right: 15px;
+  float: left;
+  text-align: center;
+}
+
+.remoteStreams td:hover {
+  cursor: pointer;
+  background-color: #aaa;
+}
+
+.remoteStreams .selected {
+  background-color: #444 !important;
+  text-shadow:none;
+  border-right-color: #aaa;
+  border-left: none;
+  border-radius: 3px 3px 3px 3px;
+  box-shadow:inset 1px 2px 6px #070707;
+}
+
+.footer {
+   clear: both;
+}
