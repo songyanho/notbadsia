@@ -64,10 +64,17 @@
         <div class="row">
             <div class="col-xs-12 col-md-8">
                 <div ng-controller="QuestionnaireController as qvc" id="questionnairevc">
-                    <div ng-hide="qvc.lastqn > 0">
-                        <p style="font-size:50px;" class="animated fadeInUp">Hi, I am Jesslyn. I am HR Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.</p>
+                    <div ng-hide="qvc.lastqn > 0 || qvc.ended">
+                        <p style="font-size:40px;" class="animated fadeInUp">
+                            Hi, I am Jesslyn. I am HR Assistant from Singapore Airlines.
+                            Before we carry on, I would like to inform you that this interview
+                            will be recorded. By starting the interview, you agree with our Privacy Policy and Terms and Conditions.
+                            Says Start to begin the interview with me.</p>
                     </div>
-                    <div id="questionlist" ng-show="qvc.lastqn > 0">
+                    <div id="questionlist" ng-show="qvc.lastqn > 0 && !qvc.ended">
+                    </div>
+                    <div ng-show="qvc.ended">
+                        <p style="font-size:50px;" class="animated fadeInUp">That's all for the interview. Thank you for joining this session and we will notify shortlisted cndidates for next round of interview. Have a good day! </p>
                     </div>
                 </div>
             </div>
@@ -87,30 +94,30 @@
     <script>
     window.ttsToken = null;
     window.sttToken = null;
-    fetch('/api/text-to-speech/token')
-    .then(function(response) {
-        return response.text();
-    }).then(function (token) {
-        window.sttToken = token;
-        WatsonSpeech.TextToSpeech.synthesize({token: token, voice: 'en-US_AllisonVoice', text: 'Hi, I am Jesslyn. I am H R Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.'});
-    });
-    fetch('/api/speech-to-text/token')
-    .then(function(response) {
-        return response.text();
-    }).then(function (token) {
-        window.sttToken = token;
-        var wstream = WatsonSpeech.SpeechToText.recognizeMicrophone({
-            token: token,
-            objectMode: true, // send objects instead of text
-            format: false // optional - performs basic formatting on the results such as capitals an periods
-        });
-        wstream.on('data', function(data) {
-            console.log(data);
-        });
-        wstream.on('error', function(err) {
-            console.log(err);
-        });
-    });
+    // fetch('/api/text-to-speech/token')
+    // .then(function(response) {
+    //     return response.text();
+    // }).then(function (token) {
+    //     window.sttToken = token;
+    //     WatsonSpeech.TextToSpeech.synthesize({token: token, voice: 'en-US_AllisonVoice', text: 'Hi, I am Jesslyn. I am H R Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.'});
+    // });
+    // fetch('/api/speech-to-text/token')
+    // .then(function(response) {
+    //     return response.text();
+    // }).then(function (token) {
+    //     window.sttToken = token;
+    //     var wstream = WatsonSpeech.SpeechToText.recognizeMicrophone({
+    //         token: token,
+    //         objectMode: true, // send objects instead of text
+    //         format: false // optional - performs basic formatting on the results such as capitals an periods
+    //     });
+    //     wstream.on('data', function(data) {
+    //         console.log(data);
+    //     });
+    //     wstream.on('error', function(err) {
+    //         console.log(err);
+    //     });
+    // });
     // WatsonSpeech.TextToSpeech.synthesize({token: window.sttToken, voice: 'en-US_AllisonVoice', text: 'Anything else to add on?'});
 
     window.siriWave = new SiriWave({
@@ -119,7 +126,7 @@
     	height: 70,
         style: 'ios9',
     	speed: 0.12,
-        amplitude: 1,
+        amplitude: 0,
         autostart: true
     });
     </script>
