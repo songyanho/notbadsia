@@ -19,6 +19,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js">
     </script>
     <script type="text/javascript" src="javascripts/app.js"></script>
+    <script type="text/javascript" src="js/siri.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -45,6 +46,12 @@
         max-width:100%;
         max-height: 180px;
     }
+    #siri-container {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+        text-align: center;
+    }
     </style>
 </head>
 <body>
@@ -70,6 +77,7 @@
         </div>
     </div>
 
+    <div id="siri-container"></div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -77,12 +85,20 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-    window.token = null;
+    window.ttsToken = null;
+    window.sttToken = null;
+    fetch('/api/text-to-speech/token')
+    .then(function(response) {
+        return response.text();
+    }).then(function (token) {
+        window.sttToken = token;
+        WatsonSpeech.TextToSpeech.synthesize({token: token, voice: 'en-US_AllisonVoice', text: 'Hi, I am Jesslyn. I am H R Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.'});
+    });
     fetch('/api/speech-to-text/token')
     .then(function(response) {
         return response.text();
     }).then(function (token) {
-        window.token = token;
+        window.sttToken = token;
         var wstream = WatsonSpeech.SpeechToText.recognizeMicrophone({
             token: token,
             objectMode: true, // send objects instead of text
@@ -95,11 +111,16 @@
             console.log(err);
         });
     });
-    fetch('/api/text-to-speech/token')
-    .then(function(response) {
-        return response.text();
-    }).then(function (token) {
-        WatsonSpeech.TextToSpeech.synthesize({token: token, text: 'Hi, I am Jesslyn. I am HR Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.'});
+    // WatsonSpeech.TextToSpeech.synthesize({token: window.sttToken, voice: 'en-US_AllisonVoice', text: 'Anything else to add on?'});
+
+    window.siriWave = new SiriWave({
+    	container: document.getElementById('siri-container'),
+    	width: 300,
+    	height: 70,
+        style: 'ios9',
+    	speed: 0.12,
+        amplitude: 1,
+        autostart: true
     });
     </script>
 </body>
