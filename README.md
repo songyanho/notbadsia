@@ -1,30 +1,19 @@
-# ProjectRTC
+# Singapore Airlines Digital HR Assistant
 
-## WebRTC Live Streaming
+Singapore Airlines Digital HR Assistant, Jesslyn, is an application built for making the recruitment process of Singapore Airlines cabin crew more efficient. Interested candidates can create an account and be interviewed any time, anywhere at their convenience. Jesslyn provides an efficient, user friendly and high tech interview experience, and maintains the video recording of the entire process. It then uses machine learning to analyze these interviews and shortlist the best candidates in terms of their english speaking profiency, tone, sincerity and other metrics. The top candidates move on to the next stage whereby they will be interviewed by SIA's HR executives and management. This saves the company a great deal of human resources and time since only the best and most qualified interviewees have to be interviewed by the management.             
 
-- Node.js server
-- Desktop client
-- [Android client](https://github.com/pchab/AndroidRTC)
+## Requirements
 
-You can also check this iOS client from Digix Technology:
-
-- [iOS client](https://github.com/digixtechnology/iOSRTC)
-
-The signaling part is done with [socket.io](socket.io).
-The client is built with [angularjs](https://angularjs.org/).
+Please install [node.js](http://nodejs.org/download/)
 
 ## Install
 
-It requires [node.js](http://nodejs.org/download/)
-
-* git clone https://github.com/pchab/ProjectRTC.git
-* cd ProjectRTC/
+* git clone https://github.com/songyanho/notbadsia.git
+* cd notbadsia/
 * npm install
-* npm start
+* node app.js
 
-The server will run on port 3000.
-You can test it in the (Chrome or Firefox) browser at localhost:3000.
+The server will run on port 3000 and can be tested on any browser (preferably Chrome or Firefox) at localhost:300. 
 
-## Author
-
-- [Pierre Chabardes](mailto:pierre@chabardes.net)
+## Credits for WebRTC
+- [Pierre Chabardes](https://github.com/pchab/ProjectRTC)
