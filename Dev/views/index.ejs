@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html ng-app="projectRtc" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Singapore Airlines Recruitment Portal</title>
+    <base href="/" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="bower_components/watson-speech/dist/watson-speech.js"></script>
+    <!-- window.fetch pollyfill for IE/Edge & Older Chrome/FireFox -->
+    <script src="bower_components/fetch/fetch.js"></script>
+    <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"> </script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="javascripts/Browser-Recording-Helper.js"></script>
+    <script type="text/javascript" src="javascripts/adapter.js"></script>
+    <script type="text/javascript" src="javascripts/rtcClient.js"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js">
+    </script>
+    <script type="text/javascript" src="javascripts/app.js"></script>
+    <script type="text/javascript" src="js/siri.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    html {
+        background: url(./images/background.jpg) center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        min-height: 100vh;
+    }
+    body {
+        background: none;
+        min-height: 100vh;
+    }
+    html, body {
+        color: #fff;
+    }
+    #localVideo {
+        max-width:100%;
+        max-height: 180px;
+    }
+    #siri-container {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-xs-12">
+                <h1><img src="images/sia_transparent.png" style="width:100px;" /> Singapore Airlines Recruitment Board</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div ng-controller="QuestionnaireController as qvc" id="questionnairevc">
+                    <div ng-hide="qvc.lastqn > 0 || qvc.ended">
+                        <p style="font-size:40px;" class="animated fadeInUp">
+                            Hi, I am Jesslyn. I am HR Assistant from Singapore Airlines.
+                            Before we carry on, I would like to inform you that this interview
+                            will be recorded. By starting the interview, you agree with our Privacy Policy and Terms and Conditions.
+                            Says Start to begin the interview with me.</p>
+                    </div>
+                    <div id="questionlist" ng-show="qvc.lastqn > 0 && !qvc.ended">
+                    </div>
+                    <div ng-show="qvc.ended">
+                        <p style="font-size:50px;" class="animated fadeInUp">That's all for the interview. Thank you for joining this session and we will notify shortlisted cndidates for next round of interview. Have a good day! </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <%= include local-cam %>
+            </div>
+        </div>
+    </div>
+
+    <div id="siri-container"></div>
+    <img src="images/app.png" style="position: fixed; opacity: 0.5; bottom: 10px; right: 10px;" />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    window.ttsToken = null;
+    window.sttToken = null;
+    // fetch('/api/text-to-speech/token')
+    // .then(function(response) {
+    //     return response.text();
+    // }).then(function (token) {
+    //     window.sttToken = token;
+    //     WatsonSpeech.TextToSpeech.synthesize({token: token, voice: 'en-US_AllisonVoice', text: 'Hi, I am Jesslyn. I am H R Assistant from Singapore Airlines. Before we carry on, I would like to inform you that this interview will be recorded for reference purpose. Says Start to begin the interview with me.'});
+    // });
+    // fetch('/api/speech-to-text/token')
+    // .then(function(response) {
+    //     return response.text();
+    // }).then(function (token) {
+    //     window.sttToken = token;
+    //     var wstream = WatsonSpeech.SpeechToText.recognizeMicrophone({
+    //         token: token,
+    //         objectMode: true, // send objects instead of text
+    //         format: false // optional - performs basic formatting on the results such as capitals an periods
+    //     });
+    //     wstream.on('data', function(data) {
+    //         console.log(data);
+    //     });
+    //     wstream.on('error', function(err) {
+    //         console.log(err);
+    //     });
+    // });
+    // WatsonSpeech.TextToSpeech.synthesize({token: window.sttToken, voice: 'en-US_AllisonVoice', text: 'Anything else to add on?'});
+
+    window.siriWave = new SiriWave({
+    	container: document.getElementById('siri-container'),
+    	width: 300,
+    	height: 70,
+        style: 'ios9',
+    	speed: 0.12,
+        amplitude: 0,
+        autostart: true
+    });
+    </script>
+</body>
+</html>
